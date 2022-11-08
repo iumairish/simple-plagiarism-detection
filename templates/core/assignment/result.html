@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Assignment Result{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for result in result %}
+                    <h3><strong>{{ result.assignment.title }}</strong></h3>
+                    <hr/>
+                    <p><strong>Total Marks:</strong> {{ result.assignment.marks }}</p>
+                    <p><strong>Due Date:</strong> {{ result.assignment.due_date }}</p>
+                    <div class="alert alert-info">
+                        <p><strong>Result:</strong> {{ result.marks }}</p>
+                        <p><strong>Teacher Comments:</strong> {{ result.comments }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

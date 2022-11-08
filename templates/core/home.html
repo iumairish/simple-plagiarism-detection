@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 px-md-4">
+        <h5 class="mb-4">Your Assignments 
+          {% if request.user.role == 'teacher' %}
+            <small><a class="float-right" href="{% url 'core:assignment-create' %}">Create Assignment</a></small>
+          {% endif %}
+        </h5>
+        {% if assignment %}
+          <table class="table">
+            <thead>
+              <th>Title</th>
+              <th>Marks</th>
+              <th>Due Date</th>
+              {% if request.user.role == 'teacher' %}
+                <th>Result</th>
+              {% endif %}
+              <th></th>
+            </thead>
+            <tbody>
+              {% for assignment in assignment %}
+                <tr>
+                  <td>{{ assignment.title }}</td>
+                  <td>{{ assignment.marks }}</td>
+                  <td>{{ assignment.due_date }}</td>
+                  {% if request.user.role == 'teacher' %}
+                    <td>{% if assignment.result %}Yes{% else %}No{% endif %}</td>
+                  {% endif %}
+                  <td>
+                    <a href="{% url 'core:assignment-view' pk=assignment.id %}">View</a> |
+                    <a download="true" href="uploads/{{ assignment.file }}">Download</a> |
+                    {% if request.user.role == 'teacher' %}
+                      <a href="{% url 'core:assignment-update' pk=assignment.id %}">Update</a> |
+                      <a href="{% url 'core:assignment-submissions' assignment.id %}">Submissions</a>
+                      {% if not assignment.result %}
+                        | <a href="{% url 'core:assignment-declare-result' assignment.id %}">Declare Result</a>
+                      {% endif %}
+                    {% endif %}
+                    {% if request.user.role == 'student' %}
+                      {% if assignment.result == True %}
+                        <a href="{% url 'core:assignment-result-view' assignment.id %}">View Result</a>
+                      {% else %}
+                        {% if assignment.expired == False %}
+                          <a href="{% url 'core:assignment-submit' id=assignment.id %}">Submit</a>
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div class="alert alert-info"><p><center>No assignment is available yet.</center></p></div>  
+        {% endif %}
+      </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>{% block title %}{% endblock %} - BC200202737</title>
+    {% load static %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  
+  <div class="wrapper">
+
+    {% ifnotequal request.path '/' %}
+      {% include "header.html" %}
+    {% endifnotequal %}
+
+    <div class="py-5">
+        <section class="container">
+          {% block body %}{% endblock %}
+        </section>
+    </div>
+
+    <div class="push"></div>
+  
+  </div>
+
+  {% ifnotequal request.path '/' %}
+    {% include "footer.html" %}
+  {% endifnotequal %}
+  
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+  {% block javascripts %} {% endblock %}
+
+</body>
+
+</html>

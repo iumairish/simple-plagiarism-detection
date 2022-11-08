@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Assignment Submissions{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 px-md-4">
+        <h5 class="mb-4">Assignment Submissions</h5>
+        {% if submissions %}
+          <table class="table">
+            <thead>
+              <th>ID</th>
+              <th>Student</th>
+              <th>File</th>
+              <th>Date</th>
+              <th>Score</th>
+              <th></th>
+            </thead>
+            <tbody>
+              {% for item in submissions %}
+                <tr>
+                  <td>{{ item.id }}</td>
+                  <td>{{ item.user.first_name }} {{ item.user.last_name }}</td>
+                  <td><a download="true" href="/uploads/{{ item.file }}">Download</a></td>
+                  <td>{{ item.submit_date }}</td>
+                  <td>{{ item.score }}</td>
+                  <td>
+                    <a href="{% url 'core:assignment-result-update' item.id %}">Add Marks</a> |
+                    {% if item.score %}
+                      <a download="true" href="/uploads/{{ item.report }}">Download Report</a>
+                    {% else %}
+                      <a href="{% url 'core:assignment-check' item.id %}">Check Plagiarism</a>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% else %}
+          <div class="alert alert-info"><p><center>No assignment is submited yet.</center></p></div>  
+        {% endif %}
+      </div>
+    </div>
+</div>
+
+{% endblock %}

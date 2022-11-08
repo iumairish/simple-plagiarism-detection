@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="row justify-content-center">
+  <div class="col-md-12">
+    <div class="text-center py-5">
+      <img alt="Logo" src="{% static 'images/logo.png' %}" class="mb-5">
+      <h1 class="mb-5">Assignments Submission Portal</h1>
+      <div class="mb-5">
+          <a href="{% url 'authentication:login' %}" class="btn btn-primary">Login</a>
+          <br><br>
+          <a href="{% url 'authentication:student-register' %}" class="btn btn-secondary">Register as Student</a>
+          <a href="{% url 'authentication:teacher-register' %}" class="btn btn-secondary">Register as Teacher</a>
+      </div>
+      <p class="text-center m-0">Developed by Umair Ishtiaq (BC200202737)</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

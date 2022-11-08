@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Assignment View{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+    
+        <div class="col-12">
+            
+            {% for assignment in assignment %}
+
+                <h3><strong>{{ assignment.title }} {{ assignment.id }}</strong></h3>
+                <hr/>
+                <p><strong>Marks:</strong> {{ assignment.marks }}</p>
+                <p><strong>Due Date:</strong> {{ assignment.due_date }}</p>
+                <p><strong>Content:</strong><br>{{ assignment.content }}</p>
+                <p>
+                    <a href="uploads/{{ assignment.file }}" class="btn btn-secondary" download="true">Download File</a>
+                </p>
+
+            {% endfor %}
+            
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
